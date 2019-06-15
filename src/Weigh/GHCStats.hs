@@ -10,7 +10,9 @@ module Weigh.GHCStats
   ,gcCount
   ,totalBytesAllocated
   ,liveBytes
-  ,maxBytesInUse)
+  ,maxBytesInUse
+  ,maxOSBytes
+  )
   where
 
 #if __GLASGOW_HASKELL__ < 802
@@ -56,6 +58,9 @@ liveBytes = gcdetails_live_bytes . gc
 maxBytesInUse :: RTSStats -> Word64
 maxBytesInUse = max_live_bytes
 #endif
+
+maxOSBytes :: RTSStats -> Word64
+maxOSBytes = max_mem_in_use_bytes
 
 -- | Get the size of a 'RTSStats' object in bytes.
 getGhcStatsSizeInBytes :: IO Int64
